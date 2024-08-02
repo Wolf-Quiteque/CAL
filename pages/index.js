@@ -13,14 +13,25 @@ export default function Home() {
       </Head>
 
       <main className="container mx-auto px-4 py-8">
-        <header className="text-center mb-8 md:mb-12">
-          <h1 className="text-2xl md:text-4xl font-bold text-white mb-4">
-            Domine o Inglês, Abra Novas Portas
-          </h1>
-          <p className="text-lg md:text-xl text-white">
-            Sua jornada para fluência começa aqui!
-          </p>
-        </header>
+      <header className="flex flex-col md:flex-row items-center justify-between mb-12">
+  <div className="mb-4 md:mb-0">
+    <Image
+      src="/images/logos.png"
+      alt="Company Logo"
+      width={300}
+      height={100}
+      className="object-contain"
+    />
+  </div>
+  <div className="text-center md:text-right">
+    <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+      Domine o Inglês, Abra Novas Portas
+    </h1>
+    <p className="text-lg md:text-xl text-white">
+      Sua jornada para fluência começa aqui!
+    </p>
+  </div>
+</header>
 
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="w-full md:w-1/2 mb-8 md:mb-0">
