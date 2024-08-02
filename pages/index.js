@@ -1,9 +1,14 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { useState } from 'react';
+import Modal from 'react-modal';
+import { supabase } from '../lib/supabaseClient';
+
 
 export default function Home() {
   const [isHovered, setIsHovered] = useState(false);
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#c47c32] to-[#2d3353]">
@@ -36,7 +41,7 @@ export default function Home() {
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="w-full md:w-1/2 mb-8 md:mb-0">
             <Image
-              src="https://picsum.photos/seed/english/600/400"
+              src="/images/hero.jpg"
               alt="Aprenda Inglês"
               width={600}
               height={400}
@@ -82,10 +87,11 @@ export default function Home() {
             Pronto para começar?
           </h3>
           <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
-            <button
-              className="w-full md:w-auto bg-[#c47c32] hover:bg-[#d48d43] text-white font-bold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105"
+          <button
+              className="bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-bold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
+              onClick={() => setModalIsOpen(true)}
             >
               {isHovered ? 'Let\'s Go!' : 'Começar Agora'}
             </button>
@@ -95,10 +101,12 @@ export default function Home() {
           </div>
         </div>
       </main>
-
+ 
       <footer className="text-center py-4 text-white">
         <p>&copy; 2024 Aprenda Inglês Online. Todos os direitos reservados.</p>
       </footer>
     </div>
   );
 }
+
+
