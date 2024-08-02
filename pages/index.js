@@ -8,76 +8,11 @@ export default function Home() {
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setModalIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    fullname: '',
-    email: '',
-    phone: '',
-    password: '',
-    data_nascimento: ''
-  });
-  const [loginData, setLoginData] = useState({ email: '', password: '' });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleLoginChange = (e) => {
-    const { name, value } = e.target;
-    setLoginData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    const { fullname, email, phone, password, data_nascimento } = formData;
-
-    try {
-      const { user, error } = await supabase.auth.signUp(
-        { email, password },
-        { data: { fullname, phone, data_nascimento }, redirectTo: '/diagnostico' },
-        { emailRedirectTo: 'http://localhost:3000/diagnostico' }
-      );
-
-      if (error) throw error;
-
-      await supabase.from('usuarios').insert([
-        { id: user.id, fullname, email, telefone: phone, data_nascimento }
-      ]);
-
-      setModalIsOpen(false);
-      window.location.href = '/diagnostico';
-    } catch (error) {
-      console.error('Error signing up:', error.message);
-      alert(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    const { email, password } = loginData;
-
-    try {
-      const { error } = await supabase.auth.signIn({ email, password });
-
-      if (error) throw error;
-
-      window.location.href = '/dashboard';
-    } catch (error) {
-      console.error('Error logging in:', error.message);
-      alert(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#c47c32] to-[#2d3353]">
  <Head>
-        <title>Aprenda Inglês - Comece Sua Jornada</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -187,13 +122,11 @@ export default function Home() {
             </svg>
           </button>
           <h2 className="text-2xl font-bold mb-4">Registrar</h2>
-          <form onSubmit={handleRegister}>
+          <form>
             <input
               type="text"
               name="fullname"
               placeholder="Nome completo"
-              value={formData.fullname}
-              onChange={handleInputChange}
               className="w-full p-2 border border-gray-300 rounded mt-2"
               required
             />
@@ -201,8 +134,7 @@ export default function Home() {
               type="email"
               name="email"
               placeholder="Email"
-              value={formData.email}
-              onChange={handleInputChange}
+           
               className="w-full p-2 border border-gray-300 rounded mt-2"
               required
             />
@@ -210,8 +142,7 @@ export default function Home() {
               type="text"
               name="phone"
               placeholder="Número de telefone"
-              value={formData.phone}
-              onChange={handleInputChange}
+      
               className="w-full p-2 border border-gray-300 rounded mt-2"
               required
             />
@@ -219,16 +150,12 @@ export default function Home() {
               type="password"
               name="password"
               placeholder="Senha"
-              value={formData.password}
-              onChange={handleInputChange}
               className="w-full p-2 border border-gray-300 rounded mt-2"
               required
             />
             <input
               type="date"
               name="data_nascimento"
-              value={formData.data_nascimento}
-              onChange={handleInputChange}
               className="w-full p-2 border border-gray-300 rounded mt-2"
               required
             />
