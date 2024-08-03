@@ -1,13 +1,45 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { supabase } from '../lib/supabaseClient';
+import {
+  setEncryptedCookie
+} from "../lib/session";
 
 export default function Home() {
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setModalIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  var user = {}
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+        const res = await fetch("/api/user/novo",{
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body:JSON.stringify(user)
+        })
+        const data = await res.json()
+        setEncryptedCookie("authsesh", user);
+        router.replace("/diagnostico")
+
+      }
+    catch (error) {
+      alert(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
 
 
   return (
@@ -122,19 +154,24 @@ export default function Home() {
             </svg>
           </button>
           <h2 className="text-2xl font-bold mb-4">Registrar</h2>
-          <form>
+          <form onSubmit={handleSubmit}>
             <input
               type="text"
               name="fullname"
               placeholder="Nome completo"
               className="w-full p-2 border border-gray-300 rounded mt-2"
               required
+              onChange={(e)=>{
+                user.name = e.target.value
+              }}
             />
             <input
               type="email"
               name="email"
               placeholder="Email"
-           
+              onChange={(e)=>{
+                user.email = e.target.value
+              }}
               className="w-full p-2 border border-gray-300 rounded mt-2"
               required
             />
@@ -142,7 +179,9 @@ export default function Home() {
               type="text"
               name="phone"
               placeholder="Número de telefone"
-      
+              onChange={(e)=>{
+                user.telefone = e.target.value
+              }}
               className="w-full p-2 border border-gray-300 rounded mt-2"
               required
             />
@@ -151,6 +190,9 @@ export default function Home() {
               name="password"
               placeholder="Senha"
               className="w-full p-2 border border-gray-300 rounded mt-2"
+              onChange={(e)=>{
+                user.password = e.target.value
+              }}
               required
             />
             <input
@@ -158,6 +200,9 @@ export default function Home() {
               name="data_nascimento"
               className="w-full p-2 border border-gray-300 rounded mt-2"
               required
+              onChange={(e)=>{
+                user.birthday = e.target.value
+              }}
             />
             <button
               type="submit"
