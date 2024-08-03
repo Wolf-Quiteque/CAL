@@ -124,7 +124,7 @@ export default function Diagnostico() {
         {!showResult ? (
           <>
             <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-              Diagnóstico de Inglês
+              Saiba o seu Nível
             </h1>
             <p className="text-gray-600 mb-8 text-center">
               Pergunta {currentQuestion + 1} de {questions.length}
@@ -161,7 +161,7 @@ export default function Diagnostico() {
           </>
         ) : (
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-800 mb-6">Resultado do Diagnóstico</h2>
+            <h2 className="text-3xl font-bold text-gray-800 mb-6">Resultado do Teste</h2>
             <p className="text-xl mb-4">
               Sua pontuação: {calculateScore().toFixed(2)}%
             </p>
