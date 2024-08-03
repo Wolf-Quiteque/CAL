@@ -109,9 +109,8 @@ export default function Diagnostico() {
   };
 
   const getLevel = (score) => {
-    if (score < 30) return 'Sem conhecimento';
-    if (score < 60) return 'Iniciante';
-    return 'Semi-iniciante';
+    if (score < 60) return 'Beginner Level 1';
+    if (score > 50) return 'Beginner Level 2';
   };
 
   return (
@@ -169,7 +168,7 @@ export default function Diagnostico() {
               Nível: {getLevel(calculateScore())}
             </p>
             <p className="text-gray-600 mb-5">
-              Baseado em suas respostas, recomendamos que você comece com os cursos para {getLevel(calculateScore()).toLowerCase()}.
+              Baseado em suas respostas, você comece o curso em <strong> {getLevel(calculateScore()).toLowerCase()} </strong>.
             </p>
             <button 
       className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-800 font-bold py-3 px-8 rounded-full shadow-lg transform transition duration-300 ease-in-out hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-50"
